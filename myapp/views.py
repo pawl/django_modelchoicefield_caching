@@ -55,7 +55,7 @@ def index(request):
           len(connection.queries))  # 7 queries (only 1 more query!)
 
     # TODO: find a good way to do the caching inside of the form?
-    # maybe caching all choices would be bad due to memory issues
+    # maybe caching all choices would be bad due to memory issues (should at least be optional)
     # but caching duplicate requests for the same artist should be possible
     # solution should not make more than one network request
     # cache must expire after the request (assume the data can change, can't use local memory cache)
