@@ -25,6 +25,10 @@ def index(request):
         {
             "title": "dangerous woman",
             "artist": 5
+        },
+        {
+            "title": "7 rings",
+            "artist": 5  # same artist as previous song
         }
     ]
 
@@ -34,7 +38,7 @@ def index(request):
         song_form.is_valid()  # runs a query to get the ModelChoiceField queryset each time
 
     print('ModelChoiceField - query count AFTER validating all songs:',
-          len(connection.queries))  # 5 queries
+          len(connection.queries))  # 6 queries
 
     # query for choices outside of the loop to prevent unnecessary queries
     artist_choices = [(artist.pk, artist.name)
@@ -48,9 +52,11 @@ def index(request):
         song_form.is_valid()
 
     print('ChoiceField w/ choices passed in - query count AFTER validating all songs:',
-          len(connection.queries))  # 6 queries (only 1 more query!)
+          len(connection.queries))  # 7 queries (only 1 more query!)
 
     # TODO: find a good way to do the caching inside of the form?
+    # maybe caching all choices would be bad due to memory issues
+    # but caching duplicate requests for the same artist should be possible
     # solution should not make more than one network request
     # cache must expire after the request (assume the data can change, can't use local memory cache)
     # assume this runs on multiple servers (can't just bust the cache locally)
