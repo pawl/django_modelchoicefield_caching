@@ -31,7 +31,7 @@ def index(request):
     for song in playlist:
         form_data = {'title': song["title"], 'artist': song["artist"]}
         song_form = forms.SongFormWithModelChoiceField(data=form_data)
-        song_form.is_valid()
+        song_form.is_valid()  # runs a query to get the ModelChoiceField queryset each time
 
     print('ModelChoiceField - query count AFTER validating all songs:',
           len(connection.queries))  # 5 queries
